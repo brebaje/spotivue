@@ -1,4 +1,5 @@
 # spotivue
+[![Netlify Status](https://api.netlify.com/api/v1/badges/5624a69a-0b1f-4fd3-a709-40e0e9fe3d05/deploy-status)](https://app.netlify.com/sites/spotivue/deploys)
 
 ## Project setup
 ```
