@@ -2,6 +2,10 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import store from './store';
+import RequestService from './services/request';
+
+// RequestService initialization
+RequestService.init(process.env.VUE_APP_SPOTIFY_API);
 
 Vue.config.productionTip = false;
 

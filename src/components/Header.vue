@@ -9,11 +9,11 @@
         <p>made with Vue</p>
       </div>
     </div>
-    <div id="header-actions">
+    <div id="header-actions" v-if="isUserLoggedIn">
+      <span id="username">{{ username }}</span>
       <button
         id="logout"
         class="btn btn-danger"
-        v-if="isUserLoggedIn"
         @click="logout"
       >
         Logout
@@ -23,15 +23,22 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from 'vuex';
+import { mapActions, mapMutations, mapState } from 'vuex';
 
 export default {
   computed: {
     ...mapState({
       isUserLoggedIn: (state) => state.loggedIn,
+      user: (state) => state.user,
     }),
+    username() {
+      return this.user ? this.user.display_name : '';
+    },
   },
   methods: {
+    ...mapActions({
+      getUserData: 'getUser',
+    }),
     ...mapMutations({
       logoutUser: 'logout',
     }),
@@ -39,6 +46,12 @@ export default {
       this.logoutUser();
       this.$router.push('/login');
     },
+  },
+  mounted() {
+    // get user data if not set
+    if (this.isUserLoggedIn && !this.user) {
+      this.getUserData();
+    }
   },
 };
 </script>
@@ -90,6 +103,19 @@ p {
 }
 
 #header-actions {
+  align-items: flex-end;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+#username {
+  display: block;
+  margin-top: 5px;
+}
+
+#logout {
+  margin-left: 15px;
   margin-top: 15px;
 }
 </style>
