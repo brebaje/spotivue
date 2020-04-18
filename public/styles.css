@@ -1,0 +1,49 @@
+body {
+  background-color: black;
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  margin: 0 auto;
+  width: auto;
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px) {
+  body {
+    width: 750px;
+  }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+  body {
+    width: 970px;
+  }
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+  body {
+    width: 1170px;
+  }
+}
+
+.btn {
+  background-color: #5cabdc;
+  border-color: #5cabdc;
+  border-radius: 4px;
+  color: white;
+  font-size: 0.8rem;
+  font-weight: bold;
+  padding: 10px;
+  text-transform: uppercase;
+}
+
+.btn-primary {
+  background-color: #1db954;
+  border-color: #1db954;
+}
+
+.btn-danger {
+  background-color: #da5673;
+  border-color: #da5673;
+}
