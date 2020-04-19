@@ -1,19 +1,27 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import RequestService from '../services/request';
+import router from '../router';
 import SpotifyApiService from '../services/spotify-api';
 import StorageService from '../services/storage';
 
 Vue.use(Vuex);
 
+const SESSION_EXPIRED_ERROR = 'Session expired, please sign in again';
+const USER_FETCH_ERROR = 'Error fetching user data, please try signing in again';
+
 export default new Vuex.Store({
   state: {
+    alertDismissed: true,
     error: false,
+    errorMessage: null,
     loading: false,
     loggedIn: !!StorageService.getAccessToken(),
     user: null,
   },
   mutations: {
+    hideAlert(state) {
+      state.alertDismissed = true;
+    },
     logout(state) {
       state.loggedIn = false;
       StorageService.removeAccessToken();
@@ -22,10 +30,12 @@ export default new Vuex.Store({
       state.loggedIn = true;
       StorageService.saveAccessToken(token);
       // set access token in header for requests
-      RequestService.setHeader(token);
+      SpotifyApiService.setAccessToken(token);
     },
-    setError(state) {
+    setError(state, message) {
+      state.alertDismissed = false;
       state.error = true;
+      if (message) state.errorMessage = message;
     },
     setLoading(state) {
       state.loading = true;
@@ -47,10 +57,14 @@ export default new Vuex.Store({
 
       try {
         const userData = await SpotifyApiService.getUserData();
-        commit('setUser', userData.data);
+        if (userData && userData.data) {
+          commit('setUser', userData.data);
+        }
       }
       catch (error) {
-        commit('setError');
+        commit('logout');
+        commit('setError', USER_FETCH_ERROR);
+        router.replace('login');
       }
       finally {
         commit('unsetLoading');
@@ -58,6 +72,11 @@ export default new Vuex.Store({
     },
     goToSpotifyLogin() {
       window.location.href = `${SpotifyApiService.getLoginUrl()}&redirect_uri=${window.location.origin}`;
+    },
+    onTokenExpired({ commit }) {
+      commit('logout');
+      commit('setError', SESSION_EXPIRED_ERROR);
+      router.replace('/login');
     },
   },
   modules: {

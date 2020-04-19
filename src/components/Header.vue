@@ -15,7 +15,7 @@
         id="logout"
         class="btn btn-danger"
         @click="logout"
-        @keydown.enter="logout"
+        @keydown.enter.space="logout"
       >
         Logout
       </button>

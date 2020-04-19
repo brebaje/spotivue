@@ -1,7 +1,11 @@
 <template>
   <div id="login-container">
-    <h2>Please sign in with your Spotify account.</h2>
-    <button class="btn btn-primary" @click="login" @keydown.enter="login">
+    <h2>
+      Sign in with your
+      <img src="../assets/spotify_logo_RGB_green.png" alt="Spotify logo">
+      account
+    </h2>
+    <button class="btn btn-primary" @click="login" @keydown.enter.space="login">
       Sign in
     </button>
   </div>
@@ -12,13 +16,6 @@ import { mapMutations } from 'vuex';
 
 export default {
   name: 'Login',
-  data() {
-    return {
-      popupReference: null,
-      title: 'Sign if with your Spotify account',
-      url: 'https://accounts.spotify.com/authorize',
-    };
-  },
   methods: {
     ...mapMutations({
       setUserLoggedIn: 'login',
@@ -58,5 +55,14 @@ export default {
   margin: 100px auto;
   max-width: 300px;
   text-align: center;
+}
+
+h2 {
+  line-height: 2.5rem;
+}
+
+img {
+  height: 40px;
+  vertical-align: middle;
 }
 </style>

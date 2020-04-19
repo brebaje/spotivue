@@ -5,7 +5,7 @@ import store from './store';
 import RequestService from './services/request';
 
 // RequestService initialization
-RequestService.init(process.env.VUE_APP_SPOTIFY_API);
+RequestService.init(process.env.VUE_APP_SPOTIFY_API, store);
 
 Vue.config.productionTip = false;
 

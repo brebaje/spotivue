@@ -11,4 +11,7 @@ export default {
   getUserData() {
     return RequestService.get('/me');
   },
+  setAccessToken(token) {
+    RequestService.setHeader(token);
+  },
 };
