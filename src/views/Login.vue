@@ -1,7 +1,7 @@
 <template>
   <div id="login-container">
     <h2>Please sign in with your Spotify account.</h2>
-    <button class="btn btn-primary" @click="login">
+    <button class="btn btn-primary" @click="login" @keydown.enter="login">
       Sign in
     </button>
   </div>
