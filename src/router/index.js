@@ -28,6 +28,14 @@ const routes = [
       public: true,
     },
   },
+  {
+    path: '*',
+    name: 'NotFound',
+    component: () => import(/* webpackChunkName: "notfound" */ '../views/NotFound.vue'),
+    meta: {
+      public: true,
+    },
+  },
 ];
 
 const router = new VueRouter({
@@ -38,7 +46,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   const isPublic = to.matched.some((record) => record.meta.public);
-  const isLoginView = to.matched.some((record) => record.name.toLowerCase() === 'login');
+  const isLoginView = to.matched.some((record) => record.name && record.name.toLowerCase() === 'login');
   const isLoggedIn = !!StorageService.getAccessToken();
 
   // not logged in
@@ -52,7 +60,8 @@ router.beforeEach((to, from, next) => {
     return next(from ? from.path : '/');
   }
 
-  // logged in and allowed to access route
+  // - public page (404)
+  // - logged in and allowed to access route
   return next();
 });
 
