@@ -31,12 +31,12 @@ export default {
 </script>
 
 <style scoped>
-.list-item {
-  align-self: baseline;
-}
-
 img {
   height: auto;
   width: 100%;
+}
+
+p {
+  font-size: 0.8rem;
 }
 </style>

@@ -53,18 +53,11 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #search-container {
   align-items: center;
   display: flex;
   justify-content: center;
-  margin-top: 25px;
-}
-
-@media (min-width: 768px) {
-  #search-container {
-    margin-top: 50px;
-  }
 }
 
 #search-input {

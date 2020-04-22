@@ -47,14 +47,14 @@ export default {
 
 <style scoped>
 .results-list {
-  border-top: 1px solid #1DB954;
   padding: 5px 0;
 }
 
 .list {
+  align-items: stretch;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  grid-gap: 1em;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  grid-gap: 1rem;
 }
 
 @media (min-width: 768px) {
@@ -64,7 +64,9 @@ export default {
 }
 
 .results-list-title {
+  border-top: 2px solid #1DB954;
   font-weight: bold;
+  padding-top: 5px;
   text-transform: uppercase;
 }
 

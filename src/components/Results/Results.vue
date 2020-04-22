@@ -50,19 +50,20 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #results-container {
-  margin: 0 15px;
+  margin: 50px 15px 0;
 }
 
 @media (min-width: 768px) {
   #results-container {
-    margin: 0;
+    margin: 50px 0 0;
   }
 }
 
 #results-title {
   font-size: 1.2rem;
+  margin: 0 0 15px;
 }
 
 .search-term {
