@@ -2,10 +2,14 @@
   <div id="login-container">
     <h2>
       Sign in with your
-      <img src="../assets/spotify_logo_RGB_green.png" alt="Spotify logo">
+      <img src="../assets/spotify_logo_RGB_green.png" alt="Spotify logo" title="Spotify logo">
       account
     </h2>
-    <button class="btn btn-primary" @click="login" @keydown.enter.space="login">
+    <button
+      aria-label="Sign in"
+      class="btn btn-primary"
+      @click="login" @keydown.enter.space="login"
+    >
       Sign in
     </button>
   </div>

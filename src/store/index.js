@@ -7,6 +7,7 @@ import StorageService from '../services/storage';
 Vue.use(Vuex);
 
 const SESSION_EXPIRED_ERROR = 'Session expired, please sign in again';
+const UNEXPECTED_ERROR = 'Something went wrong, please try again';
 const USER_FETCH_ERROR = 'Error fetching user data, please try signing in again';
 
 export default new Vuex.Store({
@@ -14,8 +15,10 @@ export default new Vuex.Store({
     alertDismissed: true,
     error: false,
     errorMessage: null,
+    lastSearchTerm: null,
     loading: false,
     loggedIn: !!StorageService.getAccessToken(),
+    searchResults: null,
     user: null,
   },
   mutations: {
@@ -35,10 +38,17 @@ export default new Vuex.Store({
     setError(state, message) {
       state.alertDismissed = false;
       state.error = true;
-      if (message) state.errorMessage = message;
+      state.errorMessage = message || UNEXPECTED_ERROR;
+    },
+    setLastSearchTerm(state, term) {
+      state.lastSearchTerm = term;
     },
     setLoading(state) {
       state.loading = true;
+    },
+    setSearchResults(state, data) {
+      // since data isn't going to change, we freeze the objects for performance
+      state.searchResults = Object.freeze(data);
     },
     setUser(state, userData) {
       state.user = userData;
@@ -65,6 +75,24 @@ export default new Vuex.Store({
         commit('logout');
         commit('setError', USER_FETCH_ERROR);
         router.replace('login');
+      }
+      finally {
+        commit('unsetLoading');
+      }
+    },
+    async getSearchResults({ commit }, searchTerm) {
+      commit('unsetError');
+      commit('setLoading');
+
+      try {
+        const searchData = await SpotifyApiService.searchFor(searchTerm);
+        if (searchData && searchData.data) {
+          commit('setLastSearchTerm', searchTerm);
+          commit('setSearchResults', searchData.data);
+        }
+      }
+      catch (error) {
+        commit('setError');
       }
       finally {
         commit('unsetLoading');

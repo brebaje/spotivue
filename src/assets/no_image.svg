@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     height="150px" width="150px"
+     version="1.1"
+     viewBox="0 0 600 600"
+     font-family="Bitstream Vera Sans, Liberation Sans, Arial, sans-serif"
+     font-size="72"
+     text-anchor="middle" >
+
+    <rect stroke="#1db954" stroke-width="10" width="600" height="600" fill="#ffffff" fill-opacity="0"/>
+    <text style="fill:#1db954;">
+        <tspan x="300" y="275">NO IMAGE</tspan><tspan x="300" y="375">AVAILABLE</tspan>
+    </text>
+</svg>

@@ -11,6 +11,10 @@ export default {
   getUserData() {
     return RequestService.get('/me');
   },
+  searchFor(term) {
+    const url = `/search?q=${term}&type=album,artist,track&limit=10`;
+    return RequestService.get(url);
+  },
   setAccessToken(token) {
     RequestService.setHeader(token);
   },

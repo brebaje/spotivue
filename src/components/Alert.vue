@@ -22,6 +22,7 @@
 import { mapMutations, mapState } from 'vuex';
 
 export default {
+  name: 'Alert',
   computed: {
     ...mapState({
       error: (state) => state.error,

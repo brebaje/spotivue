@@ -5,13 +5,14 @@
         <h1 id="logo" class="code">SpotiVue</h1>
       </router-link>
       <div id="desc">
-        <h4>Search on Spotify</h4>
+        <h4>Search in Spotify</h4>
         <p>made with Vue</p>
       </div>
     </div>
     <div id="header-actions" v-if="isUserLoggedIn">
       <span id="username">{{ username }}</span>
       <button
+        aria-label="Logout"
         id="logout"
         class="btn btn-danger"
         @click="logout"
@@ -27,6 +28,7 @@
 import { mapActions, mapMutations, mapState } from 'vuex';
 
 export default {
+  name: 'Header',
   computed: {
     ...mapState({
       isUserLoggedIn: (state) => state.loggedIn,
@@ -86,6 +88,7 @@ export default {
   font-weight: bold;
   margin: 0 10px 0 0;
   padding: 10px 15px;
+  text-shadow: 0 4px 3px rgba(0, 0, 0, 0.4), 0 8px 13px rgba(0, 0, 0, 0.1), 0 18px 23px rgba(0, 0, 0, 0.1);
 }
 
 #desc {

@@ -7,21 +7,21 @@ body {
 }
 
 /* Small Devices, Tablets */
-@media only screen and (min-width : 768px) {
+@media (min-width : 768px) {
   body {
     width: 750px;
   }
 }
 
 /* Medium Devices, Desktops */
-@media only screen and (min-width : 992px) {
+@media (min-width : 992px) {
   body {
     width: 970px;
   }
 }
 
 /* Large Devices, Wide Screens */
-@media only screen and (min-width : 1200px) {
+@media (min-width : 1200px) {
   body {
     width: 1170px;
   }
@@ -35,6 +35,7 @@ body {
   font-size: 0.8rem;
   font-weight: bold;
   padding: 10px;
+  text-shadow: 1px 2px rgba(0, 4, 4, 0.4);
   text-transform: uppercase;
 }
 
