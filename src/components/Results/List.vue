@@ -22,11 +22,14 @@ export default {
     },
     titleAmount() {
       if (this.amount) {
+        // type should be singular when only 1 result found
+        const oneOfType = this.amount === 1 ? this.type.substring(0, this.type.length - 1) : this.type;
+
         if (this.total && this.total > 10) {
           return `Top ${this.amount} ${this.type}`;
         }
 
-        return `${this.amount} ${this.type}`;
+        return `${this.amount} ${oneOfType}`;
       }
 
       return `No ${this.type} found`;
