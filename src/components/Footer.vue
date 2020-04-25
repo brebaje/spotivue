@@ -32,12 +32,14 @@ export default {
   background-color: #1DB954;
   display: flex;
   justify-content: space-between;
+  margin: 0 -15px;
   padding: 10px 30px;
 }
 
 @media (min-width: 768px) {
   #footer-container {
     border-radius: 4px 4px 0 0;
+    margin: 0;
   }
 }
 

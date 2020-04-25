@@ -10,7 +10,7 @@
       <button
         aria-label="Logout"
         id="logout"
-        class="btn btn-danger"
+        class="btn btn-danger text-shadow"
         @click="logout"
         @keydown.enter.space="logout"
       >
@@ -60,13 +60,6 @@ export default {
   align-items: stretch;
   display: flex;
   justify-content: space-between;
-  margin: 0 15px;
-}
-
-@media (min-width: 768px) {
-  #header-container {
-    margin: 0;
-  }
 }
 
 a {

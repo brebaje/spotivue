@@ -6,6 +6,7 @@ import StorageService from '../services/storage';
 
 Vue.use(Vuex);
 
+const HISTORY_LIMIT = 5;
 const SESSION_EXPIRED_ERROR = 'Session expired, please sign in again';
 const UNEXPECTED_ERROR = 'Something went wrong, please try again';
 const USER_FETCH_ERROR = 'Error fetching user data, please try signing in again';
@@ -15,9 +16,11 @@ export default new Vuex.Store({
     alertDismissed: true,
     error: false,
     errorMessage: null,
+    lastSearches: [],
     lastSearchTerm: null,
     loading: false,
     loggedIn: !!StorageService.getAccessToken(),
+    resultsFilters: ['artists', 'albums', 'tracks'],
     searchResults: null,
     user: null,
   },
@@ -35,6 +38,11 @@ export default new Vuex.Store({
       // set access token in header for requests
       SpotifyApiService.setAccessToken(token);
     },
+    removeRecentSearch(state, searchTerm) {
+      if (state.lastSearches.includes(searchTerm)) {
+        state.lastSearches.splice(state.lastSearches.indexOf(searchTerm), 1);
+      }
+    },
     setError(state, message) {
       state.alertDismissed = false;
       state.error = true;
@@ -46,12 +54,29 @@ export default new Vuex.Store({
     setLoading(state) {
       state.loading = true;
     },
+    setResultsFilters(state, activeFilters) {
+      state.resultsFilters = activeFilters;
+    },
     setSearchResults(state, data) {
       // since data isn't going to change, we freeze the objects for performance
       state.searchResults = Object.freeze(data);
     },
     setUser(state, userData) {
       state.user = userData;
+    },
+    updateRecentSearches(state, searchTerm) {
+      if (!state.lastSearches.includes(searchTerm)) {
+        // array full, remove the oldest search term
+        if (state.lastSearches.length === HISTORY_LIMIT) {
+          state.lastSearches.shift();
+        }
+      }
+      else {
+        // remove already existent search term to put it back in as last one
+        state.lastSearches.splice(state.lastSearches.indexOf(searchTerm), 1);
+      }
+
+      state.lastSearches.push(searchTerm);
     },
     unsetError(state) {
       state.error = false;
@@ -89,6 +114,7 @@ export default new Vuex.Store({
         if (searchData && searchData.data) {
           commit('setLastSearchTerm', searchTerm);
           commit('setSearchResults', searchData.data);
+          commit('updateRecentSearches', searchTerm);
         }
       }
       catch (error) {
