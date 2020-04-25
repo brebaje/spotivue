@@ -27,6 +27,10 @@
         v-for="track in tracks.items"
       ></ListItem>
     </List>
+    <div id="results-no-filters" v-if="noFilters">
+      <p>Search results are being filtered out</p>
+      <p>Please select one or more filters</p>
+    </div>
   </div>
 </template>
 
@@ -51,6 +55,9 @@ export default {
     }),
     albums() { return this.searchResults.albums; },
     artists() { return this.searchResults.artists; },
+    noFilters() {
+      return !this.showAlbums && !this.showArtists && !this.showTracks;
+    },
     tracks() { return this.searchResults.tracks; },
     showAlbums() { return this.activeResultsFilters.includes('albums'); },
     showArtists() { return this.activeResultsFilters.includes('artists'); },
@@ -85,5 +92,10 @@ export default {
 .search-term {
   font-style: italic;
   font-weight: bold;
+}
+
+#results-no-filters {
+  margin-top: 50px;
+  text-align: center;
 }
 </style>
