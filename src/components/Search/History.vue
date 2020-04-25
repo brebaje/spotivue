@@ -7,7 +7,7 @@
       <div class="search-history-item-wrapper" :key="index" v-for="(term, index) in recentSearches">
         <a
           class="search-history-item text-shadow"
-          href="#"
+          href="#0"
           :key="`a${index}`"
           :title="searchAgainText(term)"
           @click="searchFor(term)"
@@ -17,7 +17,7 @@
         </a>
         <a
           class="clear-search-history-item text-shadow"
-          href="#"
+          href="#0"
           :key="`b${index}`"
           :title="clearTermText(term)"
           @click="dismiss(term)"

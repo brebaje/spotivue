@@ -25,6 +25,13 @@ export default new Vuex.Store({
     user: null,
   },
   mutations: {
+    addSearchResults(state, { data, type }) {
+      const frozenData = { ...state.searchResults };
+      frozenData[type].items = frozenData[type].items.concat(data[type].items);
+      frozenData[type].next = data[type].next;
+      frozenData[type].total = data[type].total; // seems to be different from the original
+      state.searchResults = Object.freeze(frozenData);
+    },
     hideAlert(state) {
       state.alertDismissed = true;
     },
@@ -58,7 +65,7 @@ export default new Vuex.Store({
       state.resultsFilters = activeFilters;
     },
     setSearchResults(state, data) {
-      // since data isn't going to change, we freeze the objects for performance
+      // freezing the objects for performance
       state.searchResults = Object.freeze(data);
     },
     setUser(state, userData) {
@@ -118,6 +125,24 @@ export default new Vuex.Store({
         }
       }
       catch (error) {
+        commit('setError');
+      }
+      finally {
+        commit('unsetLoading');
+      }
+    },
+    async getNextSearchResults({ commit }, { url, type }) {
+      commit('unsetError');
+      commit('setLoading');
+
+      try {
+        const searchData = await SpotifyApiService.searchForNext(url);
+        if (searchData && searchData.data) {
+          commit('addSearchResults', { data: searchData.data, type });
+        }
+      }
+      catch (error) {
+        console.log(error);
         commit('setError');
       }
       finally {

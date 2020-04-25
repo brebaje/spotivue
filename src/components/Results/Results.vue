@@ -12,6 +12,7 @@
         :key="artist.id"
         v-for="artist in artists.items"
       ></ListItem>
+      <LoadMore type="artists"></LoadMore>
     </List>
     <List :list="albums" type="albums" v-show="showAlbums">
       <ListItem
@@ -19,6 +20,7 @@
         :key="album.id"
         v-for="album in albums.items"
       ></ListItem>
+      <LoadMore type="albums"></LoadMore>
     </List>
     <List :list="tracks" type="tracks" v-show="showTracks">
       <ListItem
@@ -26,6 +28,7 @@
         :key="track.id"
         v-for="track in tracks.items"
       ></ListItem>
+      <LoadMore type="tracks"></LoadMore>
     </List>
     <div id="results-no-filters" v-if="noFilters">
       <p>Search results are being filtered out</p>
@@ -36,9 +39,10 @@
 
 <script>
 import { mapState } from 'vuex';
+import Filters from '@/components/Results/Filters.vue';
 import List from '@/components/Results/List.vue';
 import ListItem from '@/components/Results/ListItem.vue';
-import Filters from '@/components/Results/Filters.vue';
+import LoadMore from '@/components/Results/LoadMore.vue';
 
 export default {
   name: 'Results',
@@ -46,6 +50,7 @@ export default {
     Filters,
     List,
     ListItem,
+    LoadMore,
   },
   computed: {
     ...mapState({

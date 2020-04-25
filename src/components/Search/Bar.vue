@@ -12,7 +12,7 @@
       <a
         class="input-clear"
         :class="{ hidden: !this.searchTerm }"
-        href="#"
+        href="#0"
         title="Clear search"
         @click.prevent="clearInput"
         @keydown.space.enter="clearInput"

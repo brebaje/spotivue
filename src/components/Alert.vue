@@ -7,7 +7,7 @@
       {{ message }}
       <a
         class="alert-close"
-        href="#"
+        href="#0"
         title="Dismiss alert"
         @click.prevent="dismiss"
         @keydown.enter.space="dismiss"

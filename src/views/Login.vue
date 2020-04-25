@@ -7,7 +7,7 @@
     </h2>
     <button
       aria-label="Sign in"
-      class="btn btn-primary"
+      class="btn btn-primary text-shadow"
       @click="login" @keydown.enter.space="login"
     >
       Sign in
