@@ -32,6 +32,9 @@ export default new Vuex.Store({
       frozenData[type].total = data[type].total; // seems to be different from the original
       state.searchResults = Object.freeze(frozenData);
     },
+    clearSearchResults(state) {
+      state.searchResults = null;
+    },
     hideAlert(state) {
       state.alertDismissed = true;
     },
@@ -113,6 +116,7 @@ export default new Vuex.Store({
       }
     },
     async getSearchResults({ commit }, searchTerm) {
+      commit('clearSearchResults'); // in order to make transitions between searches happen
       commit('unsetError');
       commit('setLoading');
 

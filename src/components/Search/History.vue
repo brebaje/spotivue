@@ -37,12 +37,13 @@ export default {
   name: 'History',
   computed: {
     ...mapState({
+      lastSearchTerm: (state) => state.lastSearchTerm,
       recentSearches: (state) => state.lastSearches,
     }),
   },
   methods: {
     ...mapActions({
-      searchFor: 'getSearchResults',
+      getSearchResults: 'getSearchResults',
     }),
     ...mapMutations({
       dismiss: 'removeRecentSearch',
@@ -52,6 +53,11 @@ export default {
     },
     searchAgainText(term) {
       return `Search again for ${term}`;
+    },
+    searchFor(term) {
+      if (term !== this.lastSearchTerm) {
+        this.getSearchResults(term);
+      }
     },
   },
 };

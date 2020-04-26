@@ -36,9 +36,10 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .load-more {
   align-self: center;
+  padding: 20px;
   text-align: center;
 }
 

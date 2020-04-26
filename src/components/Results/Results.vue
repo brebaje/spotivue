@@ -1,40 +1,42 @@
 <template>
-  <div id="results-container" v-if="searchResults">
-    <div id="results-container-actions">
-      <p id="results-title" v-if="searchTerm">
-        Showing results for <span class="search-term">{{ searchTerm }}</span>
-      </p>
-      <Filters></Filters>
+  <transition name="fade">
+    <div id="results-container" v-if="searchResults">
+      <div id="results-container-actions">
+        <p id="results-title" v-if="searchTerm">
+          Showing results for <span class="search-term">{{ searchTerm }}</span>
+        </p>
+        <Filters></Filters>
+      </div>
+      <List :list="artists" type="artists" v-show="showArtists">
+        <ListItem
+          :item="artist"
+          :key="artist.id"
+          v-for="artist in artists.items"
+        ></ListItem>
+        <LoadMore type="artists"></LoadMore>
+      </List>
+      <List :list="albums" type="albums" v-show="showAlbums">
+        <ListItem
+          :item="album"
+          :key="album.id"
+          v-for="album in albums.items"
+        ></ListItem>
+        <LoadMore type="albums"></LoadMore>
+      </List>
+      <List :list="tracks" type="tracks" v-show="showTracks">
+        <ListItem
+          :item="track"
+          :key="track.id"
+          v-for="track in tracks.items"
+        ></ListItem>
+        <LoadMore type="tracks"></LoadMore>
+      </List>
+      <div id="results-no-filters" v-if="noFilters">
+        <p>Search results are being filtered out</p>
+        <p>Please select one or more filters</p>
+      </div>
     </div>
-    <List :list="artists" type="artists" v-show="showArtists">
-      <ListItem
-        :item="artist"
-        :key="artist.id"
-        v-for="artist in artists.items"
-      ></ListItem>
-      <LoadMore type="artists"></LoadMore>
-    </List>
-    <List :list="albums" type="albums" v-show="showAlbums">
-      <ListItem
-        :item="album"
-        :key="album.id"
-        v-for="album in albums.items"
-      ></ListItem>
-      <LoadMore type="albums"></LoadMore>
-    </List>
-    <List :list="tracks" type="tracks" v-show="showTracks">
-      <ListItem
-        :item="track"
-        :key="track.id"
-        v-for="track in tracks.items"
-      ></ListItem>
-      <LoadMore type="tracks"></LoadMore>
-    </List>
-    <div id="results-no-filters" v-if="noFilters">
-      <p>Search results are being filtered out</p>
-      <p>Please select one or more filters</p>
-    </div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -102,5 +104,15 @@ export default {
 #results-no-filters {
   margin-top: 50px;
   text-align: center;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 1.5s;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

@@ -72,6 +72,7 @@ export default {
     },
   },
   watch: {
+    // update input to display the recent search performed again
     lastSearchTerm() {
       this.searchTerm = this.lastSearchTerm;
     },
