@@ -18,7 +18,9 @@
         </button>
       </div>
     </div>
-    <span id="username">Logged in as {{ username }}</span>
+    <span id="username" v-if="isUserLoggedIn">
+      Logged in as {{ username }}
+    </span>
   </div>
 </template>
 
