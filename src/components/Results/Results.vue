@@ -7,34 +7,40 @@
         </p>
         <Filters></Filters>
       </div>
-      <List :list="artists" type="artists" v-show="showArtists">
-        <ListItem
-          :item="artist"
-          :key="artist.id"
-          v-for="artist in artists.items"
-        ></ListItem>
-        <LoadMore type="artists"></LoadMore>
-      </List>
-      <List :list="albums" type="albums" v-show="showAlbums">
-        <ListItem
-          :item="album"
-          :key="album.id"
-          v-for="album in albums.items"
-        ></ListItem>
-        <LoadMore type="albums"></LoadMore>
-      </List>
-      <List :list="tracks" type="tracks" v-show="showTracks">
-        <ListItem
-          :item="track"
-          :key="track.id"
-          v-for="track in tracks.items"
-        ></ListItem>
-        <LoadMore type="tracks"></LoadMore>
-      </List>
-      <div id="results-no-filters" v-if="noFilters">
-        <p>Search results are being filtered out</p>
-        <p>Please select one or more filters</p>
-      </div>
+      <transition-group
+        name="slide"
+        v-on:before-leave="calcWidth"
+        v-on:leave="addFixedWidth"
+      >
+        <List class="slide" key="artists" :list="artists" type="artists" v-if="showArtists">
+          <ListItem
+            :item="artist"
+            :key="artist.id"
+            v-for="artist in artists.items"
+          ></ListItem>
+          <LoadMore type="artists"></LoadMore>
+        </List>
+        <List class="slide" key="albums" :list="albums" type="albums" v-if="showAlbums">
+          <ListItem
+            :item="album"
+            :key="album.id"
+            v-for="album in albums.items"
+          ></ListItem>
+          <LoadMore type="albums"></LoadMore>
+        </List>
+        <List class="slide" key="tracks" :list="tracks" type="tracks" v-if="showTracks">
+          <ListItem
+            :item="track"
+            :key="track.id"
+            v-for="track in tracks.items"
+          ></ListItem>
+          <LoadMore type="tracks"></LoadMore>
+        </List>
+        <div class="slide" key="none" id="results-no-filters" v-if="noFilters">
+          <p>Search results are being filtered out</p>
+          <p>Please select one or more filters</p>
+        </div>
+      </transition-group>
     </div>
   </transition>
 </template>
@@ -48,6 +54,11 @@ import LoadMore from '@/components/Results/LoadMore.vue';
 
 export default {
   name: 'Results',
+  data() {
+    return {
+      width: null,
+    };
+  },
   components: {
     Filters,
     List,
@@ -69,6 +80,15 @@ export default {
     showAlbums() { return this.activeResultsFilters.includes('albums'); },
     showArtists() { return this.activeResultsFilters.includes('artists'); },
     showTracks() { return this.activeResultsFilters.includes('tracks'); },
+  },
+  methods: {
+    addFixedWidth() {
+      // maintain same width as before for when it has position absolute during transition
+      document.querySelector('.slide-leave-active').style.width = `${this.width}px`;
+    },
+    calcWidth() {
+      this.width = document.querySelector('.slide').clientWidth;
+    },
   },
 };
 </script>
@@ -114,5 +134,30 @@ export default {
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
+}
+
+.slide {
+  transform-origin: top;
+  transition: transform 0.7s ease-in-out;
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.7s ease-in-out;
+}
+
+.slide-leave-active {
+  position: absolute;
+  /* width done dynamically */
+}
+
+.slide-enter,
+.slide-leave-to {
+  opacity: 0;
+  transform: scaleY(0);
+}
+
+.slide-move {
+  transition: all 0.7s ease-in-out;
 }
 </style>
