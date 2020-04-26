@@ -12,7 +12,14 @@
         v-on:before-leave="calcWidth"
         v-on:leave="addFixedWidth"
       >
-        <List class="slide" key="artists" :list="artists" type="artists" v-if="showArtists">
+        <List
+          class="slide"
+          key="artists"
+          :amount="artists.items.length"
+          :total="artists.total"
+          type="artists"
+          v-if="showArtists"
+        >
           <ListItem
             :item="artist"
             :key="artist.id"
@@ -20,7 +27,14 @@
           ></ListItem>
           <LoadMore type="artists"></LoadMore>
         </List>
-        <List class="slide" key="albums" :list="albums" type="albums" v-if="showAlbums">
+        <List
+          class="slide"
+          key="albums"
+          :amount="albums.items.length"
+          :total="albums.total"
+          type="albums"
+          v-if="showAlbums"
+        >
           <ListItem
             :item="album"
             :key="album.id"
@@ -28,7 +42,14 @@
           ></ListItem>
           <LoadMore type="albums"></LoadMore>
         </List>
-        <List class="slide" key="tracks" :list="tracks" type="tracks" v-if="showTracks">
+        <List
+          class="slide"
+          key="tracks"
+          :amount="tracks.items.length"
+          :total="tracks.total"
+          type="tracks"
+          v-if="showTracks"
+        >
           <ListItem
             :item="track"
             :key="track.id"

@@ -13,13 +13,11 @@
 export default {
   name: 'List',
   props: {
-    list: { type: Object, required: true },
+    amount: { default: 0, type: Number, required: false },
+    total: { default: 0, type: Number, required: false },
     type: { type: String, required: true },
   },
   computed: {
-    amount() {
-      return this.list.items ? this.list.items.length : 0;
-    },
     titleAmount() {
       if (this.amount) {
         // type should be singular when only 1 result found
@@ -40,9 +38,6 @@ export default {
       }
 
       return '';
-    },
-    total() {
-      return this.list.total ? this.list.total : 0;
     },
   },
 };
