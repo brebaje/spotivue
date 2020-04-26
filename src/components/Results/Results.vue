@@ -133,8 +133,13 @@ export default {
 }
 
 #results-title {
-  font-size: 1.2rem;
   margin: 0 0 15px;
+}
+
+@media (min-width: 768px) {
+  #results-title {
+    font-size: 1.2rem;
+  }
 }
 
 .search-term {
@@ -147,6 +152,7 @@ export default {
   text-align: center;
 }
 
+/* Animation for the whole results container */
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 1.5s;
@@ -157,6 +163,7 @@ export default {
   opacity: 0;
 }
 
+/* Animation when applying filters */
 .slide {
   transform-origin: top;
   transition: transform 0.7s ease-in-out;

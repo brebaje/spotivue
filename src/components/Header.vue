@@ -1,22 +1,24 @@
 <template>
   <div id="header-container">
-    <div id="logo-container">
-      <router-link to="/">
-        <h1 id="logo" class="code">SpotiVue</h1>
-      </router-link>
+    <div id="header-row">
+      <div id="logo-container">
+        <router-link to="/">
+          <h1 id="logo" class="code">SpotiVue</h1>
+        </router-link>
+      </div>
+      <div id="header-actions" v-if="isUserLoggedIn">
+        <button
+          aria-label="Logout"
+          id="logout"
+          class="btn btn-danger text-shadow"
+          @click="logout"
+          @keydown.enter.space="logout"
+        >
+          Logout
+        </button>
+      </div>
     </div>
-    <div id="header-actions" v-if="isUserLoggedIn">
-      <span id="username">{{ username }}</span>
-      <button
-        aria-label="Logout"
-        id="logout"
-        class="btn btn-danger text-shadow"
-        @click="logout"
-        @keydown.enter.space="logout"
-      >
-        Logout
-      </button>
-    </div>
+    <span id="username">Logged in as {{ username }}</span>
   </div>
 </template>
 
@@ -56,7 +58,7 @@ export default {
 </script>
 
 <style scoped>
-#header-container {
+#header-row {
   align-items: stretch;
   display: flex;
   justify-content: space-between;
@@ -86,7 +88,9 @@ a {
 
 #username {
   display: block;
+  font-size: 0.8rem;
   margin-top: 5px;
+  text-align: right;
 }
 
 #logout {
